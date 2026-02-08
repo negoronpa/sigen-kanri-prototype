@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { TouristResource } from "@/types";
+import { TouristResource, PersonaSettings } from "@/types";
 import { SearchForm } from "@/components/SearchForm";
 import { ResourceCard } from "@/components/ResourceCard";
+import { SettingsPanel } from "@/components/SettingsPanel";
 import { Loader2 } from "lucide-react";
 
 // Dynamically import MapView to avoid SSR issues with Leaflet
@@ -18,11 +19,18 @@ const MapView = dynamic(() => import("@/components/MapView"), {
   ),
 });
 
+const defaultSettings: PersonaSettings = {
+  ageGroup: ["middle"],
+  travelStyle: ["couple", "family"],
+  interests: ["history", "food"],
+};
+
 export default function Home() {
   const [resources, setResources] = useState<TouristResource[]>([]);
   const [selectedResourceId, setSelectedResourceId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [center, setCenter] = useState<[number, number]>([35.6895, 139.6917]); // Default Tokyo
+  const [personaSettings, setPersonaSettings] = useState<PersonaSettings>(defaultSettings);
 
   const handleSearch = async (region: string) => {
     setIsLoading(true);
@@ -33,7 +41,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ region }),
+        body: JSON.stringify({ region, personaSettings }),
       });
 
       if (!response.ok) {
@@ -65,8 +73,14 @@ export default function Home() {
         <h1 className="text-xl font-bold flex items-center gap-2">
           🌍 新しい観光資源管理ツール（プロトタイプ）
         </h1>
-        <div className="w-1/3">
-          <SearchForm onSearch={handleSearch} isLoading={isLoading} />
+        <div className="flex items-center gap-4">
+          <div className="w-80">
+            <SearchForm onSearch={handleSearch} isLoading={isLoading} />
+          </div>
+          <SettingsPanel
+            settings={personaSettings}
+            onSettingsChange={setPersonaSettings}
+          />
         </div>
       </header>
 

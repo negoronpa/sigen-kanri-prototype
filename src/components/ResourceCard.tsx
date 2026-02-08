@@ -45,6 +45,9 @@ export function ResourceCard({ resource }: ResourceCardProps) {
                         <Badge variant="secondary" className="bg-red-100 text-red-800">
                             アジア圏: {resource.scores.asian}
                         </Badge>
+                        <Badge variant="secondary" className="bg-green-100 text-green-800">
+                            日本人: {resource.scores.japanese}
+                        </Badge>
                     </div>
                 </div>
             </CardHeader>
@@ -53,7 +56,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
                 <div className="space-y-2">
                     <h3 className="font-semibold">分析結果</h3>
-                    <div className="grid gap-4 md:grid-cols-2">
+                    <div className="grid gap-4 md:grid-cols-1">
                         <div className="p-3 bg-muted rounded-lg">
                             <p className="text-sm font-medium mb-1">欧米圏への魅力</p>
                             <p className="text-sm text-muted-foreground">{resource.reasons.western}</p>
@@ -61,6 +64,10 @@ export function ResourceCard({ resource }: ResourceCardProps) {
                         <div className="p-3 bg-muted rounded-lg">
                             <p className="text-sm font-medium mb-1">アジア圏への魅力</p>
                             <p className="text-sm text-muted-foreground">{resource.reasons.asian}</p>
+                        </div>
+                        <div className="p-3 bg-muted rounded-lg">
+                            <p className="text-sm font-medium mb-1">日本人への魅力</p>
+                            <p className="text-sm text-muted-foreground">{resource.reasons.japanese}</p>
                         </div>
                     </div>
                 </div>
