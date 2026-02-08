@@ -75,8 +75,8 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
     ];
 
     return (
-        <Card className="w-full h-full">
-            <CardHeader>
+        <Card className="w-full">
+            <CardHeader className="py-4">
                 <CardTitle className="text-sm font-medium text-center">
                     価値分析チャート
                 </CardTitle>
@@ -116,18 +116,18 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                         <div className="text-muted-foreground text-xs italic">チャートを読み込み中...</div>
                     )}
                 </div>
-                <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
-                    <div className="bg-blue-50 p-2 rounded">
-                        <span className="font-bold block text-blue-700">欧米圏: {resource.scores?.western ?? 0}</span>
-                        <p className="text-gray-600 mt-1 line-clamp-2" title={resource.reasons?.western}>{resource.reasons?.western ?? "-"}</p>
+                <div className="mt-4 grid grid-cols-1 gap-3 text-xs">
+                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-100 shadow-sm">
+                        <span className="font-bold block text-blue-700 mb-1">欧米圏: {resource.scores?.western ?? 0}</span>
+                        <p className="text-gray-700 leading-relaxed">{resource.reasons?.western ?? "-"}</p>
                     </div>
-                    <div className="bg-red-50 p-2 rounded">
-                        <span className="font-bold block text-red-700">アジア圏: {resource.scores?.asian ?? 0}</span>
-                        <p className="text-gray-600 mt-1 line-clamp-2" title={resource.reasons?.asian}>{resource.reasons?.asian ?? "-"}</p>
+                    <div className="bg-red-50 p-3 rounded-lg border border-red-100 shadow-sm">
+                        <span className="font-bold block text-red-700 mb-1">アジア圏: {resource.scores?.asian ?? 0}</span>
+                        <p className="text-gray-700 leading-relaxed">{resource.reasons?.asian ?? "-"}</p>
                     </div>
-                    <div className="bg-green-50 p-2 rounded">
-                        <span className="font-bold block text-green-700">日本人: {resource.scores?.japanese ?? 0}</span>
-                        <p className="text-gray-600 mt-1 line-clamp-2" title={resource.reasons?.japanese}>{resource.reasons?.japanese ?? "-"}</p>
+                    <div className="bg-green-50 p-3 rounded-lg border border-green-100 shadow-sm">
+                        <span className="font-bold block text-green-700 mb-1">日本人: {resource.scores?.japanese ?? 0}</span>
+                        <p className="text-gray-700 leading-relaxed">{resource.reasons?.japanese ?? "-"}</p>
                     </div>
                 </div>
             </CardContent>
