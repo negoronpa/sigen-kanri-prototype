@@ -8,6 +8,7 @@ import { ResourceCard } from "@/components/ResourceCard";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { LoginPage } from "@/components/LoginPage";
 import { useAuth } from "@/components/AuthContext";
+import { ResizablePanel } from "@/components/ResizablePanel";
 import { Button } from "@/components/ui/button";
 import { Loader2, LogOut } from "lucide-react";
 
@@ -102,20 +103,24 @@ export default function Home() {
       </header>
 
       <main className="flex-1 flex overflow-hidden">
-        {/* Left Panel: Map */}
-        <div className="w-2/3 h-full relative border-r">
-          <MapView
-            resources={resources}
-            selectedResourceId={selectedResourceId}
-            onSelectResource={setSelectedResourceId}
-            center={center}
-          />
-        </div>
-
-        {/* Right Panel: Details */}
-        <div className="w-1/3 h-full bg-slate-50 p-4 overflow-hidden">
-          <ResourceCard resource={selectedResource} />
-        </div>
+        <ResizablePanel
+          leftPanel={
+            <MapView
+              resources={resources}
+              selectedResourceId={selectedResourceId}
+              onSelectResource={setSelectedResourceId}
+              center={center}
+            />
+          }
+          rightPanel={
+            <div className="h-full p-4 overflow-y-auto">
+              <ResourceCard resource={selectedResource} />
+            </div>
+          }
+          defaultLeftWidth={65}
+          minLeftWidth={50}
+          maxLeftWidth={75}
+        />
       </main>
     </div>
   );

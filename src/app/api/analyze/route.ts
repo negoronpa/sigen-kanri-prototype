@@ -116,12 +116,37 @@ export async function POST(request: Request) {
     const response = await result.response;
     const text = response.text();
 
-    // Clean up markdown code blocks if present
-    const cleanText = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    // Clean up the response to extract valid JSON
+    let cleanText = text
+      .replace(/```json/gi, "")
+      .replace(/```/g, "")
+      .trim();
 
-    const data = JSON.parse(cleanText);
+    // Try to find JSON object in the text
+    const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      cleanText = jsonMatch[0];
+    }
 
-    return NextResponse.json(data);
+    // Fix common JSON issues
+    cleanText = cleanText
+      // Remove trailing commas before } or ]
+      .replace(/,(\s*[}\]])/g, "$1")
+      // Fix unquoted property names (basic attempt)
+      .replace(/(['"])?(\w+)(['"])?\s*:/g, '"$2":');
+
+    try {
+      const data = JSON.parse(cleanText);
+      return NextResponse.json(data);
+    } catch (parseError) {
+      console.error("JSON Parse Error:", parseError);
+      console.error("Raw response:", text);
+      console.error("Cleaned response:", cleanText);
+      return NextResponse.json(
+        { error: "AIの応答を解析できませんでした。もう一度お試しください。" },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error("Error analyzing region:", error);
     return NextResponse.json(
