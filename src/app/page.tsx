@@ -6,7 +6,10 @@ import { TouristResource, PersonaSettings } from "@/types";
 import { SearchForm } from "@/components/SearchForm";
 import { ResourceCard } from "@/components/ResourceCard";
 import { SettingsPanel } from "@/components/SettingsPanel";
-import { Loader2 } from "lucide-react";
+import { LoginPage } from "@/components/LoginPage";
+import { useAuth } from "@/components/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Loader2, LogOut } from "lucide-react";
 
 // Dynamically import MapView to avoid SSR issues with Leaflet
 const MapView = dynamic(() => import("@/components/MapView"), {
@@ -26,6 +29,7 @@ const defaultSettings: PersonaSettings = {
 };
 
 export default function Home() {
+  const { isAuthenticated, logout } = useAuth();
   const [resources, setResources] = useState<TouristResource[]>([]);
   const [selectedResourceId, setSelectedResourceId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,6 +68,11 @@ export default function Home() {
     }
   };
 
+  // Show login page if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
   const selectedResource =
     resources.find((r) => r.id === selectedResourceId) || null;
 
@@ -81,6 +90,14 @@ export default function Home() {
             settings={personaSettings}
             onSettingsChange={setPersonaSettings}
           />
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={logout}
+            title="ログアウト"
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
         </div>
       </header>
 
