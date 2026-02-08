@@ -9,47 +9,60 @@ import {
     Legend,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TouristResource } from "@/types";
+import { TouristResource, BaseAttributes } from "@/types";
 
 interface RadarChartProps {
     resource: TouristResource;
 }
 
+const defaultAttributes: BaseAttributes = {
+    uniqueness: 0,
+    accessibility: 0,
+    authenticity: 0,
+    storytelling: 0,
+    instagrammability: 0,
+};
+
 export function ResourceRadarChart({ resource }: RadarChartProps) {
+    // Safely access nested attributes with defaults
+    const western = resource.attributes?.western || defaultAttributes;
+    const asian = resource.attributes?.asian || defaultAttributes;
+    const japanese = resource.attributes?.japanese || defaultAttributes;
+
     const data = [
         {
             subject: "非代替性",
-            Western: resource.attributes.western.uniqueness,
-            Asian: resource.attributes.asian.uniqueness,
-            Japanese: resource.attributes.japanese.uniqueness,
+            Western: western.uniqueness || 0,
+            Asian: asian.uniqueness || 0,
+            Japanese: japanese.uniqueness || 0,
             fullMark: 100,
         },
         {
             subject: "アクセス",
-            Western: resource.attributes.western.accessibility,
-            Asian: resource.attributes.asian.accessibility,
-            Japanese: resource.attributes.japanese.accessibility,
+            Western: western.accessibility || 0,
+            Asian: asian.accessibility || 0,
+            Japanese: japanese.accessibility || 0,
             fullMark: 100,
         },
         {
             subject: "本物感",
-            Western: resource.attributes.western.authenticity,
-            Asian: resource.attributes.asian.authenticity,
-            Japanese: resource.attributes.japanese.authenticity,
+            Western: western.authenticity || 0,
+            Asian: asian.authenticity || 0,
+            Japanese: japanese.authenticity || 0,
             fullMark: 100,
         },
         {
             subject: "物語性",
-            Western: resource.attributes.western.storytelling,
-            Asian: resource.attributes.asian.storytelling,
-            Japanese: resource.attributes.japanese.storytelling,
+            Western: western.storytelling || 0,
+            Asian: asian.storytelling || 0,
+            Japanese: japanese.storytelling || 0,
             fullMark: 100,
         },
         {
             subject: "映え度",
-            Western: resource.attributes.western.instagrammability,
-            Asian: resource.attributes.asian.instagrammability,
-            Japanese: resource.attributes.japanese.instagrammability,
+            Western: western.instagrammability || 0,
+            Asian: asian.instagrammability || 0,
+            Japanese: japanese.instagrammability || 0,
             fullMark: 100,
         },
     ];
@@ -94,16 +107,16 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
                     <div className="bg-blue-50 p-2 rounded">
-                        <span className="font-bold block text-blue-700">欧米圏: {resource.scores.western}</span>
-                        <p className="text-gray-600 mt-1">{resource.reasons.western}</p>
+                        <span className="font-bold block text-blue-700">欧米圏: {resource.scores?.western ?? 0}</span>
+                        <p className="text-gray-600 mt-1">{resource.reasons?.western ?? "-"}</p>
                     </div>
                     <div className="bg-red-50 p-2 rounded">
-                        <span className="font-bold block text-red-700">アジア圏: {resource.scores.asian}</span>
-                        <p className="text-gray-600 mt-1">{resource.reasons.asian}</p>
+                        <span className="font-bold block text-red-700">アジア圏: {resource.scores?.asian ?? 0}</span>
+                        <p className="text-gray-600 mt-1">{resource.reasons?.asian ?? "-"}</p>
                     </div>
                     <div className="bg-green-50 p-2 rounded">
-                        <span className="font-bold block text-green-700">日本人: {resource.scores.japanese}</span>
-                        <p className="text-gray-600 mt-1">{resource.reasons.japanese}</p>
+                        <span className="font-bold block text-green-700">日本人: {resource.scores?.japanese ?? 0}</span>
+                        <p className="text-gray-600 mt-1">{resource.reasons?.japanese ?? "-"}</p>
                     </div>
                 </div>
             </CardContent>
