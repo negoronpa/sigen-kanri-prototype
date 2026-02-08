@@ -10,7 +10,7 @@ import { LoginPage } from "@/components/LoginPage";
 import { useAuth } from "@/components/AuthContext";
 import { ResizablePanel } from "@/components/ResizablePanel";
 import { Button } from "@/components/ui/button";
-import { Loader2, LogOut } from "lucide-react";
+import { Cpu, Loader2, LogOut } from "lucide-react";
 
 // Dynamically import MapView to avoid SSR issues with Leaflet
 const MapView = dynamic(() => import("@/components/MapView"), {
@@ -81,7 +81,8 @@ export default function Home() {
     <div className="flex h-screen flex-col">
       <header className="border-b px-6 py-3 flex items-center justify-between bg-white z-10">
         <h1 className="text-xl font-bold flex items-center gap-2">
-          🌍 新しい観光資源管理ツール（プロトタイプ）
+          <Cpu className="w-6 h-6 text-blue-600" />
+          AIペルソナ観光資源分析（プロトタイプ）
         </h1>
         <div className="flex items-center gap-4">
           <div className="w-80">

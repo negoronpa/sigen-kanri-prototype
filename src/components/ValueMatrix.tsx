@@ -70,16 +70,16 @@ export function ValueMatrix({ x, y, reason, targetName, color = "blue" }: ValueM
 
                 {/* Quadrant Labels */}
                 <div className="absolute top-2 left-2 text-[9px] text-slate-400 font-bold bg-white/90 px-1.5 py-0.5 rounded shadow-sm">
-                    非代替的×異質
-                </div>
-                <div className="absolute top-2 right-2 text-[9px] text-slate-400 font-bold bg-white/90 px-1.5 py-0.5 rounded shadow-sm text-right">
                     非代替的×同質
                 </div>
+                <div className="absolute top-2 right-2 text-[9px] text-slate-400 font-bold bg-white/90 px-1.5 py-0.5 rounded shadow-sm text-right">
+                    非代替的×異質
+                </div>
                 <div className="absolute bottom-2 left-2 text-[9px] text-slate-400 font-bold bg-white/90 px-1.5 py-0.5 rounded shadow-sm">
-                    一般的×異質
+                    一般的×同質
                 </div>
                 <div className="absolute bottom-2 right-2 text-[9px] text-slate-400 font-bold bg-white/90 px-1.5 py-0.5 rounded shadow-sm text-right">
-                    一般的×同質
+                    一般的×異質
                 </div>
 
                 {/* Axis Labels */}
@@ -90,10 +90,10 @@ export function ValueMatrix({ x, y, reason, targetName, color = "blue" }: ValueM
                     一般的
                 </div>
                 <div className="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-600 vertical-rl uppercase tracking-widest bg-white/50 py-1 rounded">
-                    異質
+                    同質
                 </div>
                 <div className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-600 vertical-rl uppercase tracking-widest bg-white/50 py-1 rounded">
-                    同質
+                    異質
                 </div>
 
                 {/* The Point (Dynamic Color) */}

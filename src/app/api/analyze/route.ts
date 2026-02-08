@@ -48,7 +48,12 @@ export async function POST(request: Request) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+    const model = genAI.getGenerativeModel({
+      model: "gemini-flash-latest",
+      generationConfig: {
+        responseMimeType: "application/json",
+      }
+    });
 
     const personaCondition = personaSettings
       ? buildPersonaDescription(personaSettings)
@@ -136,8 +141,6 @@ export async function POST(request: Request) {
       x軸（横軸）: -50（同質/Homogeneous）から 50（異質/Heterogeneous）の数値。そのターゲットの日常や既知の文化とどれだけ「違う」か。
       y軸（縦軸）: -50（一般的/General）から 50（非代替的/Unique）の数値。そのターゲットにとって「他では替えが効かない」かどうか。
       reason: その座標にプロットした理由を、ターゲットの文化的背景を踏まえて簡潔に（2-3文で）記述してください。
-      
-      JSON以外のテキストは含めないでください。
     `;
 
     const result = await model.generateContent(prompt);
@@ -145,10 +148,7 @@ export async function POST(request: Request) {
     const text = response.text();
 
     // Clean up the response to extract valid JSON
-    let cleanText = text
-      .replace(/```json/gi, "")
-      .replace(/```/g, "")
-      .trim();
+    let cleanText = text.trim();
 
     // Try to find JSON object in the text
     const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
@@ -156,12 +156,8 @@ export async function POST(request: Request) {
       cleanText = jsonMatch[0];
     }
 
-    // Fix common JSON issues
-    cleanText = cleanText
-      // Remove trailing commas before } or ]
-      .replace(/,(\s*[}\]])/g, "$1")
-      // Fix unquoted property names (basic attempt)
-      .replace(/(['"])?(\w+)(['"])?\s*:/g, '"$2":');
+    // Fix common JSON issues (trailing commas)
+    cleanText = cleanText.replace(/,(\s*[}\]])/g, "$1");
 
     try {
       const data = JSON.parse(cleanText);

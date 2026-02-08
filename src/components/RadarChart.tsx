@@ -85,16 +85,16 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
 
     return (
         <Card className="w-full">
-            <CardHeader className="py-4">
-                <CardTitle className="text-sm font-medium text-center">
-                    価値分析チャート
+            <CardHeader className="py-2.5">
+                <CardTitle className="text-sm font-bold text-center text-slate-500 uppercase tracking-widest">
+                    価値分析レーダーチャート
                 </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0 pb-2">
                 <div className="h-[200px] w-full flex items-center justify-center">
                     {isMounted ? (
                         <ResponsiveContainer width="100%" height="100%">
-                            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                            <RadarChart cx="50%" cy="42%" outerRadius="65%" data={data}>
                                 <PolarGrid />
                                 <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10 }} />
                                 <Radar
@@ -118,7 +118,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                                     fill="#16a34a"
                                     fillOpacity={0.3}
                                 />
-                                <Legend />
+                                <Legend wrapperStyle={{ paddingTop: "25px", fontSize: "10px" }} />
                             </RadarChart>
                         </ResponsiveContainer>
                     ) : (
