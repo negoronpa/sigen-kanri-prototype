@@ -16,6 +16,11 @@ export interface BaseAttributes {
   authenticity: number; // 本物感
   storytelling: number; // 物語性
   instagrammability: number; // 映え度
+  matrix: {
+    x: number; // 同質(-50) ↔ 異質(50)
+    y: number; // 一般的(-50) ↔ 非代替的(50)
+    reason: string; // なぜそのポジションになったかの詳細な理由
+  };
 }
 
 export interface ResourceAttributes {

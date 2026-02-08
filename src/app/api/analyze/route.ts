@@ -86,8 +86,8 @@ export async function POST(request: Request) {
               "japanese": 65
             },
             "reasons": {
-              "western": "欧米圏への魅力の理由（なぜ他と差が出るのかを意識）",
-              "asian": "アジア圏への魅力の理由（なぜ低い、あるいは高いのか）",
+              "western": "欧米圏への魅力の理由",
+              "asian": "アジア圏への魅力の理由",
               "japanese": "日本人への魅力の理由"
             },
             "attributes": {
@@ -96,26 +96,47 @@ export async function POST(request: Request) {
                 "accessibility": 40,
                 "authenticity": 95,
                 "storytelling": 90,
-                "instagrammability": 50
+                "instagrammability": 50,
+                "matrix": { 
+                  "x": 40, 
+                  "y": 45,
+                  "reason": "欧米圏の歴史・文化への関心の高さから非代替的な価値が高く、かつ異文化としての刺激（異質性）が強いためこの評価となりました。"
+                }
               },
               "asian": {
                 "uniqueness": 60, 
                 "accessibility": 70,
                 "authenticity": 50,
                 "storytelling": 40,
-                "instagrammability": 85
+                "instagrammability": 85,
+                "matrix": { 
+                  "x": -30, 
+                  "y": -20,
+                  "reason": "自国（アジア）の現代的なトレンドと共通点が多く（同質性）、利便性は高いものの独自性はやや一般的であるとの評価です。"
+                }
               },
               "japanese": {
                 "uniqueness": 70, 
                 "accessibility": 80,
                 "authenticity": 75,
                 "storytelling": 70,
-                "instagrammability": 60
+                "instagrammability": 60,
+                "matrix": { 
+                  "x": 10, 
+                  "y": 20,
+                  "reason": "日本人にとって馴染みはあるものの、独自の物語性によって新たな発見があり、やや非代替的な価値を感じさせます。"
+                }
               }
             }
           }
         ]
       }
+      
+      【重要】matrixデータの定義：
+      x軸（横軸）: -50（同質/Homogeneous）から 50（異質/Heterogeneous）の数値。そのターゲットの日常や既知の文化とどれだけ「違う」か。
+      y軸（縦軸）: -50（一般的/General）から 50（非代替的/Unique）の数値。そのターゲットにとって「他では替えが効かない」かどうか。
+      reason: その座標にプロットした理由を、ターゲットの文化的背景を踏まえて簡潔に（2-3文で）記述してください。
+      
       JSON以外のテキストは含めないでください。
     `;
 
