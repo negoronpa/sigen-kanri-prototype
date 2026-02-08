@@ -98,14 +98,14 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                                 <PolarGrid />
                                 <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10 }} />
                                 <Radar
-                                    name="欧米圏"
+                                    name="欧米人"
                                     dataKey="Western"
                                     stroke="#2563eb"
                                     fill="#2563eb"
                                     fillOpacity={0.3}
                                 />
                                 <Radar
-                                    name="アジア圏"
+                                    name="アジア人"
                                     dataKey="Asian"
                                     stroke="#dc2626"
                                     fill="#dc2626"
@@ -118,7 +118,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                                     fill="#16a34a"
                                     fillOpacity={0.3}
                                 />
-                                <Legend wrapperStyle={{ paddingTop: "25px", fontSize: "10px" }} />
+                                <Legend wrapperStyle={{ paddingTop: "25px", fontSize: "11px", fontWeight: "bold" }} />
                             </RadarChart>
                         </ResponsiveContainer>
                     ) : (
@@ -129,7 +129,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                     {/* Western */}
                     <div className="bg-blue-50 p-3 rounded-lg border border-blue-100 shadow-sm relative group">
                         <div className="flex justify-between items-start mb-1">
-                            <span className="font-bold block text-blue-700">欧米圏: {resource.scores?.western ?? 0}</span>
+                            <span className="font-bold block text-blue-700">欧米人: {resource.scores?.western ?? 0}</span>
                             <Popover>
                                 <PopoverTrigger asChild>
                                     <button className="flex items-center gap-1 px-2 py-0.5 bg-blue-600 text-white rounded-full text-[10px] hover:bg-blue-700 transition-colors shadow-sm">
@@ -142,7 +142,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                                         x={westernAttributes.matrix?.x ?? 0}
                                         y={westernAttributes.matrix?.y ?? 0}
                                         reason={westernAttributes.matrix?.reason ?? ""}
-                                        targetName="欧米圏"
+                                        targetName="欧米人"
                                         color="blue"
                                     />
                                 </PopoverContent>
@@ -154,7 +154,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                     {/* Asian */}
                     <div className="bg-red-50 p-3 rounded-lg border border-red-100 shadow-sm relative group">
                         <div className="flex justify-between items-start mb-1">
-                            <span className="font-bold block text-red-700">アジア圏: {resource.scores?.asian ?? 0}</span>
+                            <span className="font-bold block text-red-700">アジア人: {resource.scores?.asian ?? 0}</span>
                             <Popover>
                                 <PopoverTrigger asChild>
                                     <button className="flex items-center gap-1 px-2 py-0.5 bg-red-600 text-white rounded-full text-[10px] hover:bg-red-700 transition-colors shadow-sm">
@@ -167,7 +167,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                                         x={asianAttributes.matrix?.x ?? 0}
                                         y={asianAttributes.matrix?.y ?? 0}
                                         reason={asianAttributes.matrix?.reason ?? ""}
-                                        targetName="アジア圏"
+                                        targetName="アジア人"
                                         color="red"
                                     />
                                 </PopoverContent>
