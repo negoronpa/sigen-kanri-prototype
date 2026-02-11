@@ -59,11 +59,15 @@ export async function POST(request: Request) {
       ? buildPersonaDescription(personaSettings)
       : "";
 
+    const customPersonaPrompt = personaSettings?.customPersona
+      ? `4. カスタムペルソナ（Custom）：${personaSettings.customPersona}`
+      : "";
+
     const prompt = `
       "${region}" の観光ポテンシャルを分析し、5つの「隠れた観光資源（Hidden Gems）」を特定してください。
       
       【重要】スコアリングの指針：
-      1. 各ターゲット層（欧米・アジア・日本）の文化的背景、旅行習慣、価値観の違いを鋭く反映させ、スコアに大きな差をつけてください。
+      1. 各ターゲット層（欧米・アジア・日本${personaSettings?.customPersona ? '・カスタム' : ''}）の文化的背景、旅行習慣、価値観の違いを鋭く反映させ、スコアに大きな差をつけてください。
       2. 0点から100点の全範囲を使い、平均的な点数（70-80点代）に偏らないようにしてください。
       3. ある層には高評価（90点以上）でも、別の層には全く響かない（40点以下）といった、ドラスティックな評価を求めています。
       4. 特に「本物感（Authenticity）」や「物語性（Storytelling）」は、そのターゲットの視点から厳しく評価してください。
@@ -72,6 +76,7 @@ export async function POST(request: Request) {
       1. 欧米圏の観光客（Western）：歴史的背景、本物志向、アドベンチャーを重視
       2. アジア圏の観光客（Asian）：トレンド、映え、ショッピング、食、利便性を重視
       3. 日本人の観光客（Japanese）：四季、癒し、質の高いサービス、定番からの脱却を重視
+      ${customPersonaPrompt}
       ${personaCondition}
       
       出力は以下のJSON形式のみで行い、言語はすべて日本語で記述してください：
@@ -88,12 +93,12 @@ export async function POST(request: Request) {
             "scores": {
               "western": 95,
               "asian": 40,
-              "japanese": 65
+              "japanese": 65${personaSettings?.customPersona ? ',\n              "custom": 85' : ''}
             },
             "reasons": {
               "western": "欧米圏への魅力の理由",
               "asian": "アジア圏への魅力の理由",
-              "japanese": "日本人への魅力の理由"
+              "japanese": "日本人への魅力の理由"${personaSettings?.customPersona ? ',\n              "custom": "カスタムペルソナへの魅力の理由"' : ''}
             },
             "attributes": {
               "western": {
@@ -105,33 +110,11 @@ export async function POST(request: Request) {
                 "matrix": { 
                   "x": 40, 
                   "y": 45,
-                  "reason": "欧米圏の歴史・文化への関心の高さから非代替的な価値が高く、かつ異文化としての刺激（異質性）が強いためこの評価となりました。"
+                  "reason": "..."
                 }
               },
-              "asian": {
-                "uniqueness": 60, 
-                "accessibility": 70,
-                "authenticity": 50,
-                "storytelling": 40,
-                "instagrammability": 85,
-                "matrix": { 
-                  "x": -30, 
-                  "y": -20,
-                  "reason": "自国（アジア）の現代的なトレンドと共通点が多く（同質性）、利便性は高いものの独自性はやや一般的であるとの評価です。"
-                }
-              },
-              "japanese": {
-                "uniqueness": 70, 
-                "accessibility": 80,
-                "authenticity": 75,
-                "storytelling": 70,
-                "instagrammability": 60,
-                "matrix": { 
-                  "x": 10, 
-                  "y": 20,
-                  "reason": "日本人にとって馴染みはあるものの、独自の物語性によって新たな発見があり、やや非代替的な価値を感じさせます。"
-                }
-              }
+              "asian": { ... },
+              "japanese": { ... }${personaSettings?.customPersona ? ',\n              "custom": {\n                "uniqueness": 80, \n                "accessibility": 60,\n                "authenticity": 85,\n                "storytelling": 80,\n                "instagrammability": 70,\n                "matrix": { \n                  "x": 20, \n                  "y": 30,\n                  "reason": "..." \n                }\n              }' : ''}
             }
           }
         ]

@@ -7,7 +7,7 @@ interface ValueMatrixProps {
     y: number; // -50 to 50
     reason: string;
     targetName: string;
-    color?: "blue" | "red" | "green";
+    color?: "blue" | "red" | "green" | "purple";
 }
 
 export function ValueMatrix({ x, y, reason, targetName, color = "blue" }: ValueMatrixProps) {
@@ -45,6 +45,17 @@ export function ValueMatrix({ x, y, reason, targetName, color = "blue" }: ValueM
             bg: "bg-green-50/40",
             text: "text-green-700",
             indicator: "bg-green-500"
+        },
+        purple: {
+            dot: "bg-purple-500",
+            point: "bg-purple-600",
+            ping: "bg-purple-500/40",
+            pulse: "bg-purple-600/20",
+            ring: "ring-purple-600/40",
+            border: "border-purple-100/50",
+            bg: "bg-purple-50/40",
+            text: "text-purple-700",
+            indicator: "bg-purple-500"
         }
     }[color];
 

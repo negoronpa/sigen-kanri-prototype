@@ -2,12 +2,14 @@ export interface CulturalScore {
   western: number;
   asian: number;
   japanese: number;
+  custom?: number;
 }
 
 export interface CulturalReason {
   western: string;
   asian: string;
   japanese: string;
+  custom?: string;
 }
 
 export interface BaseAttributes {
@@ -27,6 +29,7 @@ export interface ResourceAttributes {
   western: BaseAttributes;
   asian: BaseAttributes;
   japanese: BaseAttributes;
+  custom?: BaseAttributes;
 }
 
 export interface TouristResource {
@@ -50,6 +53,7 @@ export interface PersonaSettings {
   ageGroup: string[];
   travelStyle: string[];
   interests: string[];
+  customPersona: string;
 }
 
 export const AGE_GROUPS = [

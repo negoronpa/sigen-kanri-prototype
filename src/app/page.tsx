@@ -27,6 +27,7 @@ const defaultSettings: PersonaSettings = {
   ageGroup: ["middle"],
   travelStyle: ["couple", "family"],
   interests: ["history", "food"],
+  customPersona: "",
 };
 
 export default function Home() {

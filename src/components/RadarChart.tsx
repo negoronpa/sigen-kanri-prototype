@@ -44,6 +44,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
     const westernAttributes = resource.attributes?.western || defaultAttributes;
     const asianAttributes = resource.attributes?.asian || defaultAttributes;
     const japaneseAttributes = resource.attributes?.japanese || defaultAttributes;
+    const customAttributes = resource.attributes?.custom || defaultAttributes;
 
     const data = [
         {
@@ -51,6 +52,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
             Western: westernAttributes.uniqueness || 0,
             Asian: asianAttributes.uniqueness || 0,
             Japanese: japaneseAttributes.uniqueness || 0,
+            Custom: customAttributes.uniqueness || 0,
             fullMark: 100,
         },
         {
@@ -58,6 +60,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
             Western: westernAttributes.accessibility || 0,
             Asian: asianAttributes.accessibility || 0,
             Japanese: japaneseAttributes.accessibility || 0,
+            Custom: customAttributes.accessibility || 0,
             fullMark: 100,
         },
         {
@@ -65,6 +68,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
             Western: westernAttributes.authenticity || 0,
             Asian: asianAttributes.authenticity || 0,
             Japanese: japaneseAttributes.authenticity || 0,
+            Custom: customAttributes.authenticity || 0,
             fullMark: 100,
         },
         {
@@ -72,6 +76,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
             Western: westernAttributes.storytelling || 0,
             Asian: asianAttributes.storytelling || 0,
             Japanese: japaneseAttributes.storytelling || 0,
+            Custom: customAttributes.storytelling || 0,
             fullMark: 100,
         },
         {
@@ -79,6 +84,7 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
             Western: westernAttributes.instagrammability || 0,
             Asian: asianAttributes.instagrammability || 0,
             Japanese: japaneseAttributes.instagrammability || 0,
+            Custom: customAttributes.instagrammability || 0,
             fullMark: 100,
         },
     ];
@@ -118,6 +124,15 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                                     fill="#16a34a"
                                     fillOpacity={0.3}
                                 />
+                                {resource.scores?.custom !== undefined && (
+                                    <Radar
+                                        name="カスタム"
+                                        dataKey="Custom"
+                                        stroke="#a855f7"
+                                        fill="#a855f7"
+                                        fillOpacity={0.3}
+                                    />
+                                )}
                                 <Legend wrapperStyle={{ paddingTop: "25px", fontSize: "11px", fontWeight: "bold" }} />
                             </RadarChart>
                         </ResponsiveContainer>
@@ -200,6 +215,33 @@ export function ResourceRadarChart({ resource }: RadarChartProps) {
                         </div>
                         <p className="text-gray-700 leading-relaxed">{resource.reasons?.japanese ?? "-"}</p>
                     </div>
+
+                    {/* Custom */}
+                    {resource.scores?.custom !== undefined && (
+                        <div className="bg-purple-50 p-3 rounded-lg border border-purple-100 shadow-sm relative group">
+                            <div className="flex justify-between items-start mb-1">
+                                <span className="font-bold block text-purple-700">カスタム: {resource.scores.custom}</span>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <button className="flex items-center gap-1 px-2 py-0.5 bg-purple-600 text-white rounded-full text-[10px] hover:bg-purple-700 transition-colors shadow-sm">
+                                            <Info className="w-3 h-3" />
+                                            ポイント
+                                        </button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0 border-none shadow-2xl" side="right" align="start">
+                                        <ValueMatrix
+                                            x={customAttributes.matrix?.x ?? 0}
+                                            y={customAttributes.matrix?.y ?? 0}
+                                            reason={customAttributes.matrix?.reason ?? ""}
+                                            targetName="カスタム"
+                                            color="purple"
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                            </div>
+                            <p className="text-gray-700 leading-relaxed">{resource.reasons?.custom ?? "-"}</p>
+                        </div>
+                    )}
                 </div>
             </CardContent>
         </Card>

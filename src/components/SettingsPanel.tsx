@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Settings } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Settings, UserPlus } from "lucide-react";
 import {
     PersonaSettings,
     AGE_GROUPS,
@@ -29,10 +30,10 @@ export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps
     const [open, setOpen] = useState(false);
 
     const toggleOption = (
-        category: keyof PersonaSettings,
+        category: "ageGroup" | "travelStyle" | "interests",
         id: string
     ) => {
-        const current = settings[category];
+        const current = settings[category] as string[];
         const updated = current.includes(id)
             ? current.filter((item) => item !== id)
             : [...current, id];
@@ -108,6 +109,26 @@ export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps
                                     </Label>
                                 </div>
                             ))}
+                        </div>
+                    </div>
+
+                    {/* Custom Persona */}
+                    <div className="space-y-4 pt-4 border-t">
+                        <div className="flex items-center gap-2">
+                            <UserPlus className="h-4 w-4 text-blue-600" />
+                            <h4 className="font-medium text-sm">詳細なペルソナ設定 (カスタム)</h4>
+                        </div>
+                        <div className="space-y-2">
+                            <p className="text-[11px] text-muted-foreground leading-relaxed px-1">
+                                特定の国籍、職業、具体的な趣味嗜好などを詳しく入力してください。
+                                この内容は既存の3軸とは別の独立した「カスタム」視点として分析されます。
+                            </p>
+                            <Textarea
+                                placeholder="例: 30代、フランス出身、日本の伝統工芸を愛好しており、特に酒蔵巡り...（中略）...本物の体験を重視する一人旅。"
+                                className="min-h-[120px] text-sm leading-relaxed resize-none focus-visible:border-blue-300 focus-visible:ring-blue-100"
+                                value={settings.customPersona}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onSettingsChange({ ...settings, customPersona: e.target.value })}
+                            />
                         </div>
                     </div>
                 </div>

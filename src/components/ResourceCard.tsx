@@ -94,6 +94,11 @@ export function ResourceCard({ resource }: ResourceCardProps) {
                         <Badge variant="secondary" className="bg-green-100 text-green-800 whitespace-nowrap px-3 py-1 shadow-sm border-green-200">
                             日本人: {resource.scores?.japanese ?? 0}
                         </Badge>
+                        {resource.scores?.custom !== undefined && (
+                            <Badge variant="secondary" className="bg-purple-100 text-purple-800 whitespace-nowrap px-3 py-1 shadow-sm border-purple-200">
+                                カスタム: {resource.scores.custom}
+                            </Badge>
+                        )}
                     </div>
                 </div>
             </CardHeader>
